@@ -1,5 +1,5 @@
 {
-  "name": "@amap/three-layer",
+  "name": "@vuemap/three-layer",
   "version": "0.0.5",
   "description": "高德地图amap的threejs图层插件",
   "keywords": [
