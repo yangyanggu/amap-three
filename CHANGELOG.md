@@ -1,3 +1,6 @@
+### 0.0.6
+* threelayer增加createCanvas属性，可以通过扩展一个canvas图层将threejs绘制在独立的canvas上
+
 ### 0.0.5
 * 解决与loca一起使用时坐标转换异常问题
 * Gltf增加configLoader,用于扩展gltf配置，增加扩展能力

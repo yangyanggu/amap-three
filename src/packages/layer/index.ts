@@ -19,6 +19,7 @@ export interface ThreeLayerOptions{
   customCoordsCenter?: number[] // 默认gl自定义图层渲染的中心点
   onInit?: (render: WebGLRenderer, scene: Scene, camera: Camera) => void // 初始化完成做处理，主要用于GlCustom的init执行后做一些处理
   onRender?: (render: WebGLRenderer, scene: Scene, camera: Camera) => void // 渲染时候执行，用于替换默认的render，可以扩展后期处理等功能
+  createCanvas?: boolean // 是否额外创建canvas用于渲染threejs
 }
 
 class ThreeLayer extends Event{
@@ -47,7 +48,8 @@ class ThreeLayer extends Event{
       alpha: false,
       antialias: false,
       visible: true,
-      zIndex: 120
+      zIndex: 120,
+      createCanvas: false
     }
     this.options = Object.assign({}, defaultOptions, options);
     this.map = map;
@@ -55,8 +57,17 @@ class ThreeLayer extends Event{
   }
 
   init() {
-    const map = this.map;
     const options = this.options;
+    if(!options.createCanvas){
+      this.createGlCustomLayer();
+    }else{
+      this.createCustomCanvasLayer();
+    }
+  }
+
+  createGlCustomLayer(){
+    const options = this.options;
+    const map = this.map;
     const layerOptions = {
       zooms: options.zooms,
       opacity: options.opacity,
@@ -145,6 +156,97 @@ class ThreeLayer extends Event{
     }
     this.layer = new AMap.GLCustomLayer(layerOptions);
     this.layer.setMap(map);
+  }
+
+  createCustomCanvasLayer(){
+    const options = this.options;
+    const map = this.map;
+    const canvas = document.createElement('canvas');
+    // 这里我们的地图模式是 3D，所以创建一个透视相机，相机的参数初始化可以随意设置，因为在 render 函数中，每一帧都需要同步相机参数，因此这里变得不那么重要。
+    // 如果你需要 2D 地图（viewMode: '2D'），那么你需要创建一个正交相机
+    const container = map.getContainer();
+    const width = container.offsetWidth;
+    const height = container.offsetHeight;
+    let camera;
+    if (map.getView().type === '3D') {
+      camera = new PerspectiveCamera(60, width / height, 100, 1 << 30);
+    } else {
+      camera = new OrthographicCamera(width / -2, width / 2, height / 2, height / -2, 1, 1000);
+    }
+    const renderer = new WebGLRenderer({
+      alpha: options.alpha,
+      antialias: options.antialias,
+      canvas,
+    });
+    renderer.setSize(width, height);
+
+    // 自动清空画布这里必须设置为 false，否则地图底图将无法显示
+    const scene = new Scene();
+    this.camera = camera;
+    this.renderer = renderer;
+    renderer.setClearColor(0x000000,0)
+    this.scene = scene;
+    const layerOptions = {
+      zooms: options.zooms,
+      opacity: options.opacity,
+      visible: options.visible,
+      zIndex: options.zIndex,
+      alwaysRender: true,
+      render: () => {
+        this.customCoords.setCenter(this.center);
+        const camera = this.camera;
+        // 2D 地图下使用的正交相机
+        if (map.getView().type === '3D') {
+          const {near, far, fov, up, lookAt, position} = this.customCoords.getCameraParams() as {
+            near: number;
+            far: number;
+            fov: number;
+            up: [number, number,number];
+            lookAt: [number, number,number];
+            position: [number, number,number]
+          };
+          // 2D 地图下使用的正交相机
+          // 这里的顺序不能颠倒，否则可能会出现绘制卡顿的效果。
+          (camera as PerspectiveCamera).near = near;
+          (camera as PerspectiveCamera).far = far;
+          (camera as PerspectiveCamera).fov = fov;
+          (camera as PerspectiveCamera).position.set(...position);
+          (camera as PerspectiveCamera).up.set(...up);
+          (camera as PerspectiveCamera).lookAt(...lookAt);
+          (camera as PerspectiveCamera).updateProjectionMatrix();
+        } else {
+          const {top, bottom, left, right, position} = this.customCoords.getCameraParams() as {
+            top: number;
+            bottom: number;
+            left: number;
+            right: number;
+            position: [number, number, number]
+          };
+          // 2D 地图使用的正交相机参数赋值
+          (camera as OrthographicCamera).top = top;
+          (camera as OrthographicCamera).bottom = bottom;
+          (camera as OrthographicCamera).left = left;
+          (camera as OrthographicCamera).right = right;
+          (camera as OrthographicCamera).position.set(...position);
+          (camera as OrthographicCamera).updateProjectionMatrix();
+        }
+        this.camera = camera;
+        if(options.onRender){
+          options.onRender(this.renderer as WebGLRenderer,this.scene as Scene,this.camera as Camera);
+        }else{
+          this.renderer?.render(this.scene as Scene, camera as Camera);
+        }
+      }
+    }
+    this.layer = new AMap.CustomLayer(canvas, layerOptions);
+    this.layer.setMap(map);
+    setTimeout(() => {
+      if(options.onInit){
+        options.onInit(renderer,scene,camera);
+      }
+      this.animate();
+      this.emit('complete');
+    }, 10)
   }
 
   update(){
