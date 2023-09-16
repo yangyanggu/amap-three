@@ -1,3 +1,6 @@
+### 0.0.8
+* 开放canvas对象以及 preserveDrawingBuffer属性
+
 ### 0.0.7
 * createCanvas为true时,调整在没有触发地图本身的render时，使用threejs自身render不再直接调用map.render
 

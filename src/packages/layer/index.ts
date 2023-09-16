@@ -20,6 +20,7 @@ export interface ThreeLayerOptions{
   onInit?: (render: WebGLRenderer, scene: Scene, camera: Camera) => void // 初始化完成做处理，主要用于GlCustom的init执行后做一些处理
   onRender?: (render: WebGLRenderer, scene: Scene, camera: Camera) => void // 渲染时候执行，用于替换默认的render，可以扩展后期处理等功能
   createCanvas?: boolean // 是否额外创建canvas用于渲染threejs
+  preserveDrawingBuffer?: boolean // createCanvas为true的时候生效
 }
 
 class ThreeLayer extends Event{
@@ -33,6 +34,7 @@ class ThreeLayer extends Event{
   map: any; // 地图实例
   frameTimer = -1; // 刷新图层的定时器
   needsUpdate = false; //是否需要更新图层，默认false
+  canvas?: HTMLCanvasElement; // customLayer时缓存canvas对象用于后续绑定事件
 
   constructor(map: any, options?: ThreeLayerOptions) {
     super();
@@ -49,7 +51,8 @@ class ThreeLayer extends Event{
       antialias: false,
       visible: true,
       zIndex: 120,
-      createCanvas: false
+      createCanvas: false,
+      preserveDrawingBuffer: false
     }
     this.options = Object.assign({}, defaultOptions, options);
     this.map = map;
@@ -162,6 +165,7 @@ class ThreeLayer extends Event{
     const options = this.options;
     const map = this.map;
     const canvas = document.createElement('canvas');
+    this.canvas = canvas;
     // 这里我们的地图模式是 3D，所以创建一个透视相机，相机的参数初始化可以随意设置，因为在 render 函数中，每一帧都需要同步相机参数，因此这里变得不那么重要。
     // 如果你需要 2D 地图（viewMode: '2D'），那么你需要创建一个正交相机
     const container = map.getContainer();
@@ -177,8 +181,10 @@ class ThreeLayer extends Event{
       alpha: options.alpha,
       antialias: options.antialias,
       canvas,
+      preserveDrawingBuffer: options.preserveDrawingBuffer
     });
     renderer.setSize(width, height);
+    renderer.setPixelRatio(window.devicePixelRatio);
 
     // 自动清空画布这里必须设置为 false，否则地图底图将无法显示
     const scene = new Scene();

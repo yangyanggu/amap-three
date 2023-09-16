@@ -1,4 +1,4 @@
-# @amap/three-layer
+# @vuemap/three-layer
 [![npm (tag)](https://img.shields.io/npm/v/@vuemap/three-layer)](https://www.npmjs.org/package/@vuemap/three-layer)
 [![NPM downloads](http://img.shields.io/npm/dm/@vuemap/three-layer.svg)](https://npmjs.org/package/@vuemap/three-layer)
 ![JS gzip size](http://img.badgesize.io/https://unpkg.com/@vuemap/three-layer/dist/index.js?compression=gzip&label=gzip%20size:%20JS)
@@ -112,39 +112,41 @@ layer.on('complete', () => {
 map: 地图实例对象<br/>
 options: ThreeLayer初始化参数，参数内容如下：
 
-| 属性名 | 属性类型            | 属性描述                               |
-| ---- |-----------------|------------------------------------|
-| zIndex | Number          | 图层的层级，默认为 120                      |
-| visible | Boolean         | 图层是否可见，默认为 true                    |
-| zooms  | [Number,Number] | 图层缩放等级范围，默认 [2, 20]                |
-| opacity | Number          | 图层透明度，默认为 1                        |
-| alpha   | Boolean         | canvas是否包含alpha (透明度)。默认为 false    |
-| antialias | Boolean | 是否执行抗锯齿。默认为false                   |
-| customCoordsCenter | [Number,Number] | gl自定义图层渲染的中心点，默认为初始化时的地图中心点        |
-| onInit | Function(render: WebGLRenderer, scene: Scene, camera: Camera) | GlCustomLayer的init执行后触发回调，用于扩展处理能力 |
-| onRender | render: WebGLRenderer, scene: Scene, camera: Camera) | GlCustomLayer的render触发时触发该回调，用于替换刷新功能，可以用于增加threejs的后期处理 | 
+| 属性名                   | 属性类型                                                          | 属性描述                                                     |
+|-----------------------|---------------------------------------------------------------|----------------------------------------------------------|
+| zIndex                | Number                                                        | 图层的层级，默认为 120                                            |
+| visible               | Boolean                                                       | 图层是否可见，默认为 true                                          |
+| zooms                 | [Number,Number]                                               | 图层缩放等级范围，默认 [2, 20]                                      |
+| opacity               | Number                                                        | 图层透明度，默认为 1                                              |
+| alpha                 | Boolean                                                       | canvas是否包含alpha (透明度)。默认为 false                          |
+| antialias             | Boolean                                                       | 是否执行抗锯齿。默认为false                                         |
+| customCoordsCenter    | [Number,Number]                                               | gl自定义图层渲染的中心点，默认为初始化时的地图中心点                              |
+| onInit                | Function(render: WebGLRenderer, scene: Scene, camera: Camera) | GlCustomLayer的init执行后触发回调，用于扩展处理能力                       |
+| onRender              | render: WebGLRenderer, scene: Scene, camera: Camera)          | GlCustomLayer的render触发时触发该回调，用于替换刷新功能，可以用于增加threejs的后期处理 | 
+| createCanvas          | Boolean                                                       | 是否额外创建canvas用于渲染threejs ，默认false                         |
+| preserveDrawingBuffer | Boolean                                                       | createCanvas为true的时候生效                                   |
 
 ###### 成员函数
 
-| 函数名 | 入参                                 | 返回值                                              | 描述                                 |
-|-----|------------------------------------|--------------------------------------------------|------------------------------------|
-| update | 无                                  | 无                                                | 更新图层，执行后将在下次帧刷新时更新图层               |
+| 函数名           | 入参                                 | 返回值                                              | 描述                                 |
+|---------------|------------------------------------|--------------------------------------------------|------------------------------------|
+| update        | 无                                  | 无                                                | 更新图层，执行后将在下次帧刷新时更新图层               |
 | convertLngLat | [Number,Number] (经纬度)              | [Number,Number]                                  | 将经纬度转化为世界坐标                        |
-| add | Object(threejs的对象，包括灯光、Object3D等等) | 无                                                | 添加对象到场景中，支持所有可添加到场景的对象             |
-| remove | Object                             | 无                                                | 从场景中移除对象                           |
-| getScene | 无 | THREE.Scene                                      | 获取Threejs的场景对象                     |
-| getCamera | 无 | THREE.PerspectiveCamera或THREE.OrthographicCamera | 获取Threejs的相机对象，根据viewMode不同获取的相机不同 |
-| getRender | 无 | THREE.WebGLRenderer                                           | 获取Threejs的webglRender              |
-| getMap | 无 | AMap.Map | 获取地图实例                             |
-| getOpacity | 无 | Number | 获取图层透明度                            |
-| setOpacity | Number | 无 | 设置图层透明度 值范围：0 - 1                  |
-| getZooms | 无 | [Number,Number] | 获取显示层级范围  |
-| setZooms | [Number,Number] | 无 | 设置图层显示的层级范围 |
-| getzIndex | 无 | Number | 获取图层层级 |
-| setzIndex | Number | 无 | 设置图层层级 |
-| show | 无 | 无 | 显示图层 |
-| hide | 无 | 无 | 隐藏图层 |
-|destroy | 无 | 无 | 销毁图层 |
+| add           | Object(threejs的对象，包括灯光、Object3D等等) | 无                                                | 添加对象到场景中，支持所有可添加到场景的对象             |
+| remove        | Object                             | 无                                                | 从场景中移除对象                           |
+| getScene      | 无                                  | THREE.Scene                                      | 获取Threejs的场景对象                     |
+| getCamera     | 无                                  | THREE.PerspectiveCamera或THREE.OrthographicCamera | 获取Threejs的相机对象，根据viewMode不同获取的相机不同 |
+| getRender     | 无                                  | THREE.WebGLRenderer                              | 获取Threejs的webglRender              |
+| getMap        | 无                                  | AMap.Map                                         | 获取地图实例                             |
+| getOpacity    | 无                                  | Number                                           | 获取图层透明度                            |
+| setOpacity    | Number                             | 无                                                | 设置图层透明度 值范围：0 - 1                  |
+| getZooms      | 无                                  | [Number,Number]                                  | 获取显示层级范围                           |
+| setZooms      | [Number,Number]                    | 无                                                | 设置图层显示的层级范围                        |
+| getzIndex     | 无                                  | Number                                           | 获取图层层级                             |
+| setzIndex     | Number                             | 无                                                | 设置图层层级                             |
+| show          | 无                                  | 无                                                | 显示图层                               |
+| hide          | 无                                  | 无                                                | 隐藏图层                               |
+| destroy       | 无                                  | 无                                                | 销毁图层                               |
 
 ###### 事件列表
 
