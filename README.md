@@ -1,9 +1,9 @@
 # @amap/three-layer
-[![npm (tag)](https://img.shields.io/npm/v/@amap/three-layer)](https://www.npmjs.org/package/@amap/three-layer)
-[![NPM downloads](http://img.shields.io/npm/dm/@amap/three-layer.svg)](https://npmjs.org/package/@amap/three-layer)
-![JS gzip size](http://img.badgesize.io/https://unpkg.com/@amap/three-layer/dist/index.js?compression=gzip&label=gzip%20size:%20JS)
-[![NPM](https://img.shields.io/npm/l/@amap/three-layer)](https://github.com/AMap-Web/amap-three)
-[![star](https://badgen.net/github/stars/amap-web/amap-three)](https://github.com/AMap-Web/amap-three)
+[![npm (tag)](https://img.shields.io/npm/v/@vuemap/three-layer)](https://www.npmjs.org/package/@vuemap/three-layer)
+[![NPM downloads](http://img.shields.io/npm/dm/@vuemap/three-layer.svg)](https://npmjs.org/package/@vuemap/three-layer)
+![JS gzip size](http://img.badgesize.io/https://unpkg.com/@vuemap/three-layer/dist/index.js?compression=gzip&label=gzip%20size:%20JS)
+[![NPM](https://img.shields.io/npm/l/@vuemap/three-layer)](https://github.com/yangyanggu/amap-three)
+[![star](https://badgen.net/github/stars/yangyanggu/amap-three)](https://github.com/yangyanggu/amap-three)
 
 ### 示例
 [codepen示例](https://codepen.io/yangyanggu/pen/jOxyJqp)
@@ -24,13 +24,13 @@ CDN加载需要先加载高德地图JS和threejs的库，代码如下
 <!--加载threejs的GLTFLoader -->
 <script src="https://cdn.jsdelivr.net/npm/three@0.143/examples/js/loaders/GLTFLoader.js"></script>
 <!--加载three-layer插件 -->
-<script src="https://cdn.jsdelivr.net/npm/@amap/three-layer/dist/index.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@vuemap/three-layer/dist/index.js"></script>
 ```
 
 #### npm加载
 npm加载可以直接使用安装库
 ```shell
-npm install '@amap/three-layer'
+npm install '@vuemap/three-layer'
 ```
 
 ### 使用示例
@@ -41,7 +41,7 @@ npm install '@amap/three-layer'
 <script src="https://cdn.jsdelivr.net/npm/three@0.143/build/three.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.143/examples/js/loaders/GLTFLoader.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.143/examples/js/loaders/DRACOLoader.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@amap/three-layer/dist/index.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@vuemap/three-layer/dist/index.js"></script>
 <script type="text/javascript">
   const map = new AMap.Map('app', {
       center: [120,31],
@@ -77,7 +77,7 @@ npm install '@amap/three-layer'
 #### npm方式
 ```js
 import {AmbientLight} from 'three'
-import {ThreeLayer, ThreeGltf} from '@amap/three-layer'
+import {ThreeLayer, ThreeGltf} from '@vuemap/three-layer'
 const map = new AMap.Map('app', {
   center: [120,31],
   zoom: 14,
