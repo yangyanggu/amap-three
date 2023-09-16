@@ -1,3 +1,6 @@
+### 0.0.10
+* 解决打包问题
+
 ### 0.0.9
 * gltf增加useModelCache属性，开启后同一个url只会下载一次文件，后续使用clone方法克隆对象，所有模型公用同一个材质，降低内存
 * layer开放webGLRendererParameters属性

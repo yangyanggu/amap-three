@@ -1,2 +1,2 @@
 export * from './packages'
-export * from './utils/threeUtil'
+export * from './utils'
