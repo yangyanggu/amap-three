@@ -9,7 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/three@0.142/build/three.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.142/examples/js/loaders/GLTFLoader.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.143/examples/js/loaders/DRACOLoader.js"></script>
-    <script src="/index.js" ></script>
+    <script src="/dist/index.js" ></script>
   </head>
   <body>
     <div id="app" style="height: 600px;"></div>
@@ -49,6 +49,13 @@
         })
         console.log('layer: ', layer)
         console.log('gltf: ', gltf)
+        gltf.on('complete',() => {
+          setInterval(() => {
+            position[0] += 0.001;
+            position[1] += 0.001;
+            gltf.setPosition(position)
+          }, 500)
+        })
       })
 
       let loca = new Loca.Container({

@@ -255,7 +255,15 @@ class ThreeLayer extends Event{
 
   animate() {
     if (this.needsUpdate) {
-      this.refreshMap();
+      if(this.options.createCanvas){
+        if(this.options.onRender){
+          this.options.onRender(this.renderer as WebGLRenderer,this.scene as Scene,this.camera as Camera);
+        }else{
+          this.renderer?.render(this.scene as Scene, this.camera as Camera);
+        }
+      }else{
+        this.refreshMap();
+      }
       this.needsUpdate = false;
     }
     this.frameTimer = requestAnimationFrame(() => {

@@ -1,5 +1,0 @@
-#
-packages:
-  - 'src/**'
-  - '!packages/__mocks__'
-  - '!**/__tests__/**'

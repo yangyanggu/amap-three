@@ -10,7 +10,9 @@ import livereload from 'rollup-plugin-livereload'
 import esbuild from 'rollup-plugin-esbuild'
 import typescript from '@rollup/plugin-typescript';
 
+import copy from 'rollup-plugin-copy';
 import RemoveGlobalNamePlugin from "./build/RemoveGlobalNamePlugin";
+
 
 
 function isProd(){
@@ -22,7 +24,7 @@ export default {
   input: 'src/index.ts',
   output: [
     {
-      file: './dist/index.js',
+      file: './dist/dist/index.js',
       format: 'umd',
       sourcemap: true,
       name: 'AMap',
@@ -35,12 +37,12 @@ export default {
       //这样，在通过<script>标签引入时，才能通过name访问到export的内容。
     },
     {
-      file: './dist/index.mjs',
+      file: './dist/dist/index.mjs',
       format: 'es',
       sourcemap: true
     },
     {
-      file: './dist/index.cjs',
+      file: './dist/dist/index.cjs',
       format: 'cjs',
       sourcemap: true
     }
@@ -74,6 +76,30 @@ export default {
         // require @rollup/plugin-commonjs
         '.json': 'json',
       },
+    }),
+    isProd() && copy({
+      targets: [
+        {
+          src: './README.md', dest: './dist',
+        },
+        {
+          src: './LICENSE', dest: './dist',
+        },
+        {
+          src: './CHANGELOG.md', dest: './dist',
+        },
+        {
+          src: './src', dest: './dist',
+        },
+        {
+          src: './package.json', dest: './dist',transform(content){
+            const json = JSON.parse(content.toString());
+            delete json.devDependencies;
+            delete json.scripts;
+            return JSON.stringify(json, undefined, 2);
+          }
+        }
+      ]
     }),
     // 热更新
     !isProd() && livereload({

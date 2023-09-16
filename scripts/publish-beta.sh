@@ -4,7 +4,7 @@ set -e
 
 pnpm run build
 
-cd ..
+cd ../dist
 
 npm publish --tag=beta --access public
 cd -

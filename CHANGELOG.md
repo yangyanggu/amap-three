@@ -1,3 +1,6 @@
+### 0.0.7
+* createCanvas为true时,调整在没有触发地图本身的render时，使用threejs自身render不再直接调用map.render
+
 ### 0.0.6
 * threelayer增加createCanvas属性，可以通过扩展一个canvas图层将threejs绘制在独立的canvas上
 

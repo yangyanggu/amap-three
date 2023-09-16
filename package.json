@@ -1,6 +1,6 @@
 {
   "name": "@vuemap/three-layer",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "高德地图amap的threejs图层插件",
   "keywords": [
     "amap",
@@ -20,9 +20,6 @@
   "unpkg": "dist/index.js",
   "jsdelivr": "dist/index.js",
   "packageManager": "pnpm@7.9.4",
-  "workspaces": [
-    "src/*"
-  ],
   "engines": {
     "node": ">= 16"
   },
@@ -75,6 +72,7 @@
     "prettier": "^2.7.1",
     "rimraf": "3.0.2",
     "rollup": "^2.78.1",
+    "rollup-plugin-copy": "^3.5.0",
     "rollup-plugin-esbuild": "4.9.3",
     "rollup-plugin-filesize": "9.1.2",
     "rollup-plugin-livereload": "^2.0.5",
