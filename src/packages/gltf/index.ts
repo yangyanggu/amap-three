@@ -65,7 +65,7 @@ class ThreeGltf extends BaseEvent{
           // 模型还未加载完成，延时后继续尝试加载
           this.getModelTimer = setTimeout(() => {
             this.init(options);
-          }, 100)
+          }, 10)
         }
       }else {
         // 初始化对象并锁住缓存
@@ -228,6 +228,20 @@ class ThreeGltf extends BaseEvent{
       clearGroup(this.object);
       this.object = null;
       this.layer = null;
+    }
+  }
+
+  /**
+   * 清除所有缓存
+   */
+  static clearAllModelCache() {
+    if(window._THREE_GLTF_CACHE){
+      Object.values(window._THREE_GLTF_CACHE).forEach(item => {
+        if(item.model){
+          clearGroup(item.model.scene);
+        }
+      })
+      window._THREE_GLTF_CACHE = {};
     }
   }
 }

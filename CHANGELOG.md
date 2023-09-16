@@ -1,8 +1,9 @@
 ### 0.0.9
 * gltf增加useModelCache属性，开启后同一个url只会下载一次文件，后续使用clone方法克隆对象，所有模型公用同一个材质，降低内存
+* layer开放webGLRendererParameters属性
 
 ### 0.0.8
-* 开放canvas对象以及 preserveDrawingBuffer属性
+* 开放canvas对象
 
 ### 0.0.7
 * createCanvas为true时,调整在没有触发地图本身的render时，使用threejs自身render不再直接调用map.render

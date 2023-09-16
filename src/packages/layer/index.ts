@@ -7,7 +7,7 @@ import {
 } from 'three';
 import Event from '../event'
 import {clearScene} from "../../utils/threeUtil";
-import type {Camera} from 'three';
+import type {Camera, WebGLRendererParameters} from 'three';
 
 export interface ThreeLayerOptions{
   zIndex?: number
@@ -20,7 +20,7 @@ export interface ThreeLayerOptions{
   onInit?: (render: WebGLRenderer, scene: Scene, camera: Camera) => void // 初始化完成做处理，主要用于GlCustom的init执行后做一些处理
   onRender?: (render: WebGLRenderer, scene: Scene, camera: Camera) => void // 渲染时候执行，用于替换默认的render，可以扩展后期处理等功能
   createCanvas?: boolean // 是否额外创建canvas用于渲染threejs
-  preserveDrawingBuffer?: boolean // createCanvas为true的时候生效
+  webGLRendererParameters?: WebGLRendererParameters // createCanvas为true的时候生效
 }
 
 class ThreeLayer extends Event{
@@ -52,7 +52,7 @@ class ThreeLayer extends Event{
       visible: true,
       zIndex: 120,
       createCanvas: false,
-      preserveDrawingBuffer: false
+      webGLRendererParameters: {}
     }
     this.options = Object.assign({}, defaultOptions, options);
     this.map = map;
@@ -91,7 +91,8 @@ class ThreeLayer extends Event{
         const renderer = new WebGLRenderer({
           context: gl, // 地图的 gl 上下文
           alpha: options.alpha,
-          antialias: options.antialias
+          antialias: options.antialias,
+          ...options.webGLRendererParameters
           // canvas: gl.canvas,
         });
         renderer.setSize(width, height);
@@ -181,7 +182,7 @@ class ThreeLayer extends Event{
       alpha: options.alpha,
       antialias: options.antialias,
       canvas,
-      preserveDrawingBuffer: options.preserveDrawingBuffer
+      ...options.webGLRendererParameters
     });
     renderer.setSize(width, height);
     renderer.setPixelRatio(window.devicePixelRatio);
