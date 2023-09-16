@@ -161,16 +161,17 @@ options: ThreeLayer初始化参数，参数内容如下：
 layer: ThreeLayer实例对象<br/>
 options: ThreeGltf初始化参数，参数内容如下：
 
-| 属性名 | 属性类型                                                        | 属性描述                              |
-| ---- |-------------------------------------------------------------|-----------------------------------|
-| url | String                                                      | 模型加载地址                            |
-| position | [Number,Number]                                             | 模型的经纬度位置信息                        |
-| height  | Number                                                      | 模型离地高度，默认0                        |
-| rotation | {x:Number, y: Number, z: Number}                            | 模型旋转角度，用于调整模型方向  默认 {x:0,y:0,z:0} |
-| scale   | Number，{x:Number, y: Number, z: Number}                     | 模型缩放比例，可以传入数值或者VEC3数据，默认 1        |
-| angle | Number                                                      | 模型旋转角度，一般用于车辆模型角度使用，默认 0          |
-| onLoaded | Function(gltf: Group, animations:  AnimationClip[]) | 模型加载完成后触发回调                       | 
-| configLoader | (loader: GLTFLoader) => void                                                      | 配置loader，用于添加draco等扩展               |
+| 属性名           | 属性类型                                                | 属性描述                                                         |
+|---------------|-----------------------------------------------------|--------------------------------------------------------------|
+| url           | String                                              | 模型加载地址                                                       |
+| position      | [Number,Number]                                     | 模型的经纬度位置信息                                                   |
+| height        | Number                                              | 模型离地高度，默认0                                                   |
+| rotation      | {x:Number, y: Number, z: Number}                    | 模型旋转角度，用于调整模型方向  默认 {x:0,y:0,z:0}                            |
+| scale         | Number，{x:Number, y: Number, z: Number}             | 模型缩放比例，可以传入数值或者VEC3数据，默认 1                                   |
+| angle         | Number                                              | 模型旋转角度，一般用于车辆模型角度使用，默认 0                                     |
+| onLoaded      | Function(gltf: Group, animations:  AnimationClip[]) | 模型加载完成后触发回调                                                  | 
+| configLoader  | (loader: GLTFLoader) => void                        | 配置loader，用于添加draco等扩展                                        |
+| useModelCache | Boolean                                             | 是否启用模型缓存，开启后模型批量加载同一个模型地址时只有第一个执行下载，后续模型将直接使用clone能力。默认false |
 
 ###### 成员函数
 

@@ -30,32 +30,38 @@
         console.log('layer complete: ', layer);
         const light = new THREE.AmbientLight('#ffffff', 1);
         layer.add(light);
+        const configLoader = (loader) =>{
+          const dracoLoader = new THREE.DRACOLoader()
+          dracoLoader.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.143/examples/js/libs/draco/');
+          loader.setDRACOLoader( dracoLoader );
+        }
         let position = [116.54, 39.79]
-        const gltf = new AMap.ThreeGltf(layer, {
-          url: './ferrari.glb',
-          configLoader: (loader) =>{
-            const dracoLoader = new THREE.DRACOLoader()
-            dracoLoader.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.143/examples/js/libs/draco/');
-            loader.setDRACOLoader( dracoLoader );
-          },
-          position: position,
-          scale: 800,
-          rotation: {
-            x:90,
-            y:0,
-            z:0
-          },
-          angle: 0
-        })
-        console.log('layer: ', layer)
-        console.log('gltf: ', gltf)
-        gltf.on('complete',() => {
-          setInterval(() => {
-            position[0] += 0.001;
-            position[1] += 0.001;
-            gltf.setPosition(position)
-          }, 500)
-        })
+        for(let i=0;i<3000;i++){
+          const newPosition = [position[0]+Math.random()*0.1, position[1]+Math.random()*0.1];
+          const gltf = new AMap.ThreeGltf(layer, {
+            url: './sgyj_point_animation.gltf',
+            configLoader,
+            useModelCache: true,
+            position: newPosition,
+            scale: 80,
+            rotation: {
+              x:90,
+              y:0,
+              z:0
+            },
+            angle: 0
+          })
+          // console.log('layer: ', layer)
+          // console.log('gltf: ', gltf)
+          // gltf.on('complete',() => {
+          //   /*setInterval(() => {
+          //     position[0] += 0.001;
+          //     position[1] += 0.001;
+          //     gltf.setPosition(position)
+          //   }, 500)*/
+          // })
+        }
+
       })
 
       let loca = new Loca.Container({
