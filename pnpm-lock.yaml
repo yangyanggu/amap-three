@@ -1,16 +1,16 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
 dependencies:
-  '@amap/amap-jsapi-types':
-    specifier: ^0.0.8
-    version: 0.0.8
   '@types/three':
     specifier: 0.143.0
     version: 0.143.0
+  '@vuemap/amap-jsapi-types':
+    specifier: ^0.0.17
+    version: 0.0.17
   three:
     specifier: 0.143.0
     version: 0.143.0
@@ -105,10 +105,6 @@ devDependencies:
     version: 4.7.4
 
 packages:
-
-  /@amap/amap-jsapi-types@0.0.8:
-    resolution: {integrity: sha512-q0FyZDIJcXjsMLGc3oS9rjfJsErOvt9rcp6AgzY4k14vo7bBhdq4eKwoSdVp/pYjR/rfaKBns5v10ycZOFwf/A==}
-    dev: false
 
   /@babel/runtime@7.18.9:
     resolution: {integrity: sha512-lkqXDcvlFT5rvEjiu6+QYO+1GXrEHRo2LOtS7E4GtX5ESIZOgepqsZBVIj6Pv+a6zqsya9VCgiK1KAK4BvJDAw==}
@@ -556,6 +552,10 @@ packages:
       '@typescript-eslint/types': 5.35.1
       eslint-visitor-keys: 3.3.0
     dev: true
+
+  /@vuemap/amap-jsapi-types@0.0.17:
+    resolution: {integrity: sha512-FHI8OMWxJWbgyuQ0tKclvurQIVHRexMIYAOwZ/z9+G7aHHK5EFhKM13siLczNNAgXdJ2dctPEghCdlhcByl3Ag==}
+    dev: false
 
   /abbrev@1.1.1:
     resolution: {integrity: sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==}
@@ -2824,6 +2824,7 @@ packages:
   /iconv-lite@0.6.3:
     resolution: {integrity: sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==}
     engines: {node: '>=0.10.0'}
+    requiresBuild: true
     dependencies:
       safer-buffer: 2.1.2
     dev: true
