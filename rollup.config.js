@@ -108,6 +108,7 @@ export default {
     }),
     // 开发模式开启静态服务器
     !isProd() && serve({
+      host: '127.0.0.1',
       open: true,
       port: 8080,
       contentBase: ['dist', 'test', './'],

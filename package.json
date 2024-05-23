@@ -1,6 +1,6 @@
 {
   "name": "@vuemap/three-layer",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "高德地图amap的threejs图层插件",
   "keywords": [
     "amap",

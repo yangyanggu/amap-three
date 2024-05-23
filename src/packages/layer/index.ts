@@ -36,6 +36,8 @@ class ThreeLayer extends Event{
   needsUpdate = false; //是否需要更新图层，默认false
   canvas?: HTMLCanvasElement; // customLayer时缓存canvas对象用于后续绑定事件
 
+  _updateSizeFn: any
+
   constructor(map: any, options?: ThreeLayerOptions) {
     super();
     options = options || {};
@@ -65,6 +67,20 @@ class ThreeLayer extends Event{
       this.createGlCustomLayer();
     }else{
       this.createCustomCanvasLayer();
+    }
+    this._updateSizeFn = () => {
+      this.updateRendererSize()
+    }
+    this.map.on('resize', this._updateSizeFn)
+  }
+
+  updateRendererSize(){
+    const container = this.map.getContainer();
+    const width = container.offsetWidth;
+    const height = container.offsetHeight;
+    this.renderer?.setSize(width, height)
+    if(this.map.getView().type === '3D'){
+      (this.camera as PerspectiveCamera).aspect = width / height;
     }
   }
 
@@ -318,6 +334,8 @@ class ThreeLayer extends Event{
 
   destroy() {
     cancelAnimationFrame(this.frameTimer);
+    this.map.off('resize', this._updateSizeFn);
+    this._updateSizeFn = undefined;
     this.layer.setMap(null);
     this.customCoords = null;
     clearScene(this.scene);

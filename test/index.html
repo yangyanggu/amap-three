@@ -21,7 +21,7 @@
         pitch: 35
       })
       const layer = new AMap.ThreeLayer(map, {
-        createCanvas: true,
+        createCanvas: false,
         onInit(){
           console.log('init layer')
         },
@@ -36,7 +36,7 @@
           loader.setDRACOLoader( dracoLoader );
         }
         let position = [116.54, 39.79]
-        for(let i=0;i<10000;i++){
+        for(let i=0;i<2;i++){
           const newPosition = [position[0]+Math.random()*0.1, position[1]+Math.random()*0.1];
           const gltf = new AMap.ThreeGltf(layer, {
             url: './sgyj_point_animation.gltf',
